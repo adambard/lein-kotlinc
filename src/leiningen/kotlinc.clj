@@ -14,7 +14,7 @@
    a dependency on kotlin-runtime to your project!"
   [project & args]
   (let [settings (:lein-kotlinc project)
-        version (or (:kotlin-compiler-version settings) "0.8.679")
+        version (or (:kotlin-compiler-version settings) "0.12.1230")
         project (merge-profiles project [(kotlin-profile version)])
         {kotlin-source-path :kotlin-source-path
          compile-path :compile-path} project]
@@ -23,6 +23,6 @@
       (nil? kotlin-source-path) (info ":kotlin-source-path not defined; no kotlin files will be compiled")
       :otherwise (eval-in-project project
                   `(do
-                    (org.jetbrains.jet.cli.jvm.K2JVMCompiler/main
+                    (org.jetbrains.kotlin.cli.jvm.K2JVMCompiler/main
                       (into-array ["-d" ~compile-path
                                    ~kotlin-source-path ])))))))
